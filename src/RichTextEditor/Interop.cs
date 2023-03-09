@@ -2,7 +2,7 @@
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
-namespace Blazored.TextEditor
+namespace RichTextEditor
 {
     public static class Interop
     {
@@ -17,8 +17,8 @@ namespace Blazored.TextEditor
             string debugLevel)
         {
             return jsRuntime.InvokeAsync<object>(
-                "QuillFunctions.createQuill", 
-                quillElement, toolbar, readOnly, 
+                "QuillFunctions.createQuill",
+                quillElement, toolbar, readOnly,
                 placeholder, theme, formats, debugLevel);
         }
 
@@ -27,7 +27,7 @@ namespace Blazored.TextEditor
             ElementReference quillElement)
         {
             return jsRuntime.InvokeAsync<string>(
-                "QuillFunctions.getQuillText", 
+                "QuillFunctions.getQuillText",
                 quillElement);
         }
 
@@ -36,7 +36,7 @@ namespace Blazored.TextEditor
             ElementReference quillElement)
         {
             return jsRuntime.InvokeAsync<string>(
-                "QuillFunctions.getQuillHTML", 
+                "QuillFunctions.getQuillHTML",
                 quillElement);
         }
 
@@ -45,7 +45,7 @@ namespace Blazored.TextEditor
             ElementReference quillElement)
         {
             return jsRuntime.InvokeAsync<string>(
-                "QuillFunctions.getQuillContent", 
+                "QuillFunctions.getQuillContent",
                 quillElement);
         }
 
@@ -55,7 +55,7 @@ namespace Blazored.TextEditor
             string Content)
         {
             return jsRuntime.InvokeAsync<object>(
-                "QuillFunctions.loadQuillContent", 
+                "QuillFunctions.loadQuillContent",
                 quillElement, Content);
         }
 
@@ -75,7 +75,7 @@ namespace Blazored.TextEditor
             bool mode)
         {
             return jsRuntime.InvokeAsync<object>(
-                "QuillFunctions.enableQuillEditor", 
+                "QuillFunctions.enableQuillEditor",
                 quillElement, mode);
         }
 
