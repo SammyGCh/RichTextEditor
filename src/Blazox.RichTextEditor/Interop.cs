@@ -2,7 +2,7 @@
 using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
-namespace RichTextEditor
+namespace Blazox.RichTextEditor
 {
     public static class Interop
     {

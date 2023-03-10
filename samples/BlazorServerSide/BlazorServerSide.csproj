@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\RichTextEditor\RichTextEditor.csproj" />
+    <ProjectReference Include="..\..\src\Blazox.RichTextEditor\Blazox.RichTextEditor.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
-    <RootNamespace>RichTextEditor</RootNamespace>
+    <RootNamespace>Blazox.RichTextEditor</RootNamespace>
 
-    <PackageId>RichTextEditor</PackageId>
+    <PackageId>Blazox.RichTextEditor</PackageId>
     <Version>1.0.0</Version>
     <Authors>Sammy Guadarrama Chávez, Michael Washington</Authors>
     <Description>Rich text editor for Blazor applications - Uses Quill JS</Description>
@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Blazored-BlazorQuill.js" />
+    <None Include="wwwroot\Blazox-BlazorQuill.js" />
   </ItemGroup>
 
 </Project>
