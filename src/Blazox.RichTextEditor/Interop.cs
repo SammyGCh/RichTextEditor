@@ -99,5 +99,15 @@ namespace Blazox.RichTextEditor
                 "QuillFunctions.insertQuillText",
                 quillElement, text);
         }
+
+        internal static ValueTask<object> DeleteTextContent(
+            IJSRuntime jsRuntime,
+            ElementReference quillElement,
+            int limit)
+        {
+            return jsRuntime.InvokeAsync<object>(
+                "QuillFunctions.deleteTextContent",
+                quillElement, limit);
+        }
     }
 }

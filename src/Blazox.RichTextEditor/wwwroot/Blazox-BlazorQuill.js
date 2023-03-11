@@ -74,6 +74,9 @@
 
             return quillElement.__quill.deleteText(editorIndex, selectionLength)
                 .concat(quillElement.__quill.insertText(editorIndex, text));
+        },
+        deleteTextContent: function (quillElement, limit) {
+            quillElement.__quill.deleteText(limit, quillElement.__quill.getLength());
         }
     };
 })();

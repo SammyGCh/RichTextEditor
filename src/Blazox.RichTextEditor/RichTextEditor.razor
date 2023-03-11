@@ -38,12 +38,26 @@
     [Parameter]
     public EventCallback<string> OnTextContentChange { get; set; }
 
+    [Parameter]
+    public int MaxLength 
+    {
+        get => _maxLength;
+        set => _maxLength = value <= NO_MAX_LENGTH_VALUE ? 
+                    throw new ArgumentOutOfRangeException(
+                        nameof(MaxLength), 
+                        "MaxLength must be a number greater than zero."
+                    ) : 
+                    value;
+    }
+
     public string TextContent { get => _textContent; }
 
     private ElementReference QuillElement;
     private ElementReference ToolBar;
     private DotNetObjectReference<RichTextEditor> _editorReference;
     private string _textContent = string.Empty;
+    private const int NO_MAX_LENGTH_VALUE = 0;
+    private int _maxLength = NO_MAX_LENGTH_VALUE;
 
     protected override async Task
         OnAfterRenderAsync(bool firstRender)
@@ -69,6 +83,14 @@
     public async Task AddTextContent()
     {
         _textContent = await GetText();
+
+        if (_maxLength > NO_MAX_LENGTH_VALUE && _textContent.Length > _maxLength)
+        {
+            await Interop.DeleteTextContent(
+                JSRuntime, QuillElement, _maxLength
+            );    
+        }
+
         await OnTextContentChange.InvokeAsync(_textContent);
     }
 
