@@ -14,12 +14,13 @@ namespace Blazox.RichTextEditor
             string placeholder,
             string theme,
             string[] formats,
-            string debugLevel)
+            string debugLevel,
+            DotNetObjectReference<RichTextEditor> editorReference)
         {
             return jsRuntime.InvokeAsync<object>(
                 "QuillFunctions.createQuill",
                 quillElement, toolbar, readOnly,
-                placeholder, theme, formats, debugLevel);
+                placeholder, theme, formats, debugLevel, editorReference);
         }
 
         internal static ValueTask<string> GetText(

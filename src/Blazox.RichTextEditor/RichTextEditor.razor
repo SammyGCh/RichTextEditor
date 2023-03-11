@@ -1,4 +1,5 @@
 ﻿@inject IJSRuntime JSRuntime
+@implements IDisposable
 
 <div id="QuillToolBar" @ref="@ToolBar">
     @ToolbarContent
@@ -34,14 +35,23 @@
     public string DebugLevel { get; set; }
         = "info";
 
+    [Parameter]
+    public EventCallback<string> OnTextContentChange { get; set; }
+
+    public string TextContent { get => _textContent; }
+
     private ElementReference QuillElement;
     private ElementReference ToolBar;
+    private DotNetObjectReference<RichTextEditor> _editorReference;
+    private string _textContent = string.Empty;
 
     protected override async Task
         OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            _editorReference = DotNetObjectReference.Create(this);
+
             await Interop.CreateQuill(
                 JSRuntime,
                 QuillElement,
@@ -50,8 +60,16 @@
                 Placeholder,
                 Theme,
                 Formats,
-                DebugLevel);
+                DebugLevel,
+                _editorReference);
         }
+    }
+
+    [JSInvokable("AddTextContent")]
+    public async Task AddTextContent()
+    {
+        _textContent = await GetText();
+        await OnTextContentChange.InvokeAsync(_textContent);
     }
 
     public async Task<string> GetText()
@@ -105,5 +123,10 @@
         var QuillDelta =
             await Interop.EnableQuillEditor(
                 JSRuntime, QuillElement, mode);
+    }
+
+    public void Dispose()
+    {
+        _editorReference?.Dispose();
     }
 }

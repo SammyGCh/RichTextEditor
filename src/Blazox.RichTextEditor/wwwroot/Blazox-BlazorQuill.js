@@ -2,7 +2,7 @@
     window.QuillFunctions = {        
         createQuill: function (
             quillElement, toolBar, readOnly,
-            placeholder, theme, formats, debugLevel) {  
+            placeholder, theme, formats, debugLevel, editorReference) {  
 
             Quill.register('modules/blotFormatter', QuillBlotFormatter.default);
 
@@ -21,7 +21,13 @@
                 options.formats = formats;
             }
 
-            new Quill(quillElement, options);
+            let quillEditor = new Quill(quillElement, options);
+
+            if (!readOnly) {
+                quillEditor.on('text-change', () => {
+                    editorReference.invokeMethodAsync("AddTextContent");
+                });
+            }
         },
         getQuillContent: function(quillElement) {
             return JSON.stringify(quillElement.__quill.getContents());
