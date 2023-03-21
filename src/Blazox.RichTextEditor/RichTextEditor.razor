@@ -9,35 +9,78 @@
 </div>
 
 @code {
+    private ElementReference QuillElement;
+    private ElementReference ToolBar;
+    private DotNetObjectReference<RichTextEditor> _editorReference;
+    private string _textContent = string.Empty;
+    private const int NO_MAX_LENGTH_VALUE = 0;
+    private int _maxLength = NO_MAX_LENGTH_VALUE;
+
+    /// <summary>
+    /// Sets de initial content of the editor.
+    /// This parameter is optional.
+    /// </summary>
     [Parameter]
     public RenderFragment EditorContent { get; set; }
 
+    /// <summary>
+    /// Sets the Toolbar (above the editor control, or in-line when using the 
+    /// bubble theme, and a user highlights text in the editor).
+    /// This parameter is optional.
+    /// </summary>
     [Parameter]
     public RenderFragment ToolbarContent { get; set; }
 
+    /// <summary>
+    /// Determines if the editor will load in read-only mode. This mode can be toggled.
+    /// This is an optional paramater, the default value is <code>false</code>.
+    /// </summary>
     [Parameter]
     public bool ReadOnly { get; set; }
         = false;
 
+    /// <summary>
+    /// The text to show when editor is empty.
+    /// This is an optional parameter.
+    /// </summary>
     [Parameter]
     public string Placeholder { get; set; }
         = "Compose an epic...";
 
+    /// <summary>
+    /// Use <code>snow</code> to show the Toolbar on top of the editor, and <code>bubble</code> for inline editing.
+    /// This is an optional parameter, the default value is <code>snow</code>
+    /// </summary>
     [Parameter]
     public string Theme { get; set; }
         = "snow";
 
+    /// <summary>
+    /// Configures the formats options for the editor. 
+    /// See <see cref="https://quilljs.com/docs/formats/"/> for more information.
+    /// </summary>
     [Parameter]
     public string[] Formats { get; set; }
         = null;
 
+    /// <summary>
+    /// Determines the level of debug information returned to the web browser console window.
+    /// Options are error, warn, log, or info.
+    /// This is an pptional parameter, the default value is info.
+    /// </summary>
     [Parameter]
     public string DebugLevel { get; set; }
         = "info";
 
+    /// <summary>
+    /// A callback that will be invoked when the text of the editor changes. This change doesn't include the insert of images.
+    /// </summary>
     [Parameter]
     public EventCallback<string> OnTextContentChange { get; set; }
 
+    /// <summary>
+    /// Sets the max length of the text content of the editor.
+    /// </summary>
     [Parameter]
     public int MaxLength 
     {
@@ -49,15 +92,6 @@
                     ) : 
                     value;
     }
-
-    public string TextContent { get => _textContent; }
-
-    private ElementReference QuillElement;
-    private ElementReference ToolBar;
-    private DotNetObjectReference<RichTextEditor> _editorReference;
-    private string _textContent = string.Empty;
-    private const int NO_MAX_LENGTH_VALUE = 0;
-    private int _maxLength = NO_MAX_LENGTH_VALUE;
 
     protected override async Task
         OnAfterRenderAsync(bool firstRender)
@@ -79,6 +113,10 @@
         }
     }
 
+    /// <summary>
+    /// A Javascript invocable method for bind the on-change event of the editor. Do not call this method.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous add text content operation.</returns>
     [JSInvokable("AddTextContent")]
     public async Task AddTextContent()
     {
@@ -94,24 +132,41 @@
         await OnTextContentChange.InvokeAsync(_textContent);
     }
 
+    /// <summary>
+    /// Gets the content of the editor as Text.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous get text operation. The result of the task is the text content.</returns>
     public async Task<string> GetText()
     {
         return await Interop.GetText(
             JSRuntime, QuillElement);
     }
 
+    /// <summary>
+    /// Gets the content of the editor as HTML.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous get HTML operation. The result of the task is the HTML content.</returns>
     public async Task<string> GetHTML()
     {
         return await Interop.GetHTML(
             JSRuntime, QuillElement);
     }
 
+    /// <summary>
+    /// Gets the content of the editor in the native Quill JSON Delta format.
+    /// </summary>
+    /// <returns>A task that represents the asynchronous get content operation. The result of the task is the native Quill JSON Delta content.</returns>
     public async Task<string> GetContent()
     {
         return await Interop.GetContent(
             JSRuntime, QuillElement);
     }
 
+    /// <summary>
+    /// Sets the content of the editor in the native Quill JSON Delta format.
+    /// </summary>
+    /// <param name="Content">The content in native Quill JSON Delta format that will be loaded.</param>
+    /// <returns>A task that represents the asynchronous load Quill content operation.</returns>
     public async Task LoadContent(string Content)
     {
         var QuillDelta =
@@ -119,6 +174,11 @@
                 JSRuntime, QuillElement, Content);
     }
 
+    /// <summary>
+    /// Sets the content of the editor in HTML format.
+    /// </summary>
+    /// <param name="quillHTMLContent">The content in HTML format that will be loaded.</param>
+    /// <returns>A task that represents the asynchronous load HTML content operation.</returns>
     public async Task LoadHTMLContent(string quillHTMLContent)
     {
         var QuillDelta =
@@ -126,6 +186,11 @@
                 JSRuntime, QuillElement, quillHTMLContent);
     }
 
+    /// <summary>
+    /// Inserts an image at the current point in the editor.
+    /// </summary>
+    /// <param name="ImageURL">The image URL that will be inserted.</param>
+    /// <returns>A task that represents the asynchronous insert image operation.</returns>
     public async Task InsertImage(string ImageURL)
     {
         var QuillDelta =
@@ -133,6 +198,11 @@
                 JSRuntime, QuillElement, ImageURL);
     }
 
+    /// <summary>
+    /// Inserts text at the current point in the editor.
+    /// </summary>
+    /// <param name="text">The text that will be inserted.</param>
+    /// <returns>A task that represents the asynchronous insert text operation.</returns>
     public async Task InsertText(string text)
     {
         var QuillDelta =
@@ -140,6 +210,11 @@
                 JSRuntime, QuillElement, text);
     }
 
+    /// <summary>
+    /// Sets the enable mode of the editor.
+    /// </summary>
+    /// <param name="mode">true if the editor will be enable; false otherwise.</param>
+    /// <returns>A task that represents the asynchronous enable operation.</returns>
     public async Task EnableEditor(bool mode)
     {
         var QuillDelta =
