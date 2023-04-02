@@ -53,7 +53,9 @@
 </div>
 <br />
 <RichTextEditor @ref="@QuillNative"
-                    Placeholder="Enter non HTML format like centering...">
+                    Placeholder="Enter non HTML format like centering..." 
+                    OnTextContentChange="TextContentChanged" 
+                    MaxLength="20">
     <ToolbarContent>
         <span class="ql-formats">
             <select class="ql-font">
@@ -119,6 +121,11 @@
 </div>
 <br />
 <br />
+<div>
+    @_editorTextContent
+</div>
+<br />
+<br />
 <RichTextEditor @ref="@QuillReadOnly"
                     ReadOnly="true"
                     Theme="bubble"
@@ -167,10 +174,11 @@
 
     string QuillHTMLContent;
     string QuillContent;
-    string QuillReadOnlyContent = 
+    string QuillReadOnlyContent =
         @"<span><b>Read Only</b> <u>Content</u></span>";
 
     bool mode = false;
+    private string _editorTextContent = string.Empty;
 
     public async void GetHTML()
     {
@@ -215,5 +223,10 @@
     {
         mode = (mode) ? false : true;
         await this.QuillReadOnly.EnableEditor(mode);
+    }
+
+    private void TextContentChanged(string textContent)
+    {
+        _editorTextContent = textContent;
     }
 }
