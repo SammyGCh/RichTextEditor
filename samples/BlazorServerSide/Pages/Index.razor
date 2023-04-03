@@ -54,8 +54,9 @@
 <br />
 <RichTextEditor @ref="@QuillNative"
                     Placeholder="Enter non HTML format like centering..." 
-                    OnTextContentChange="TextContentChanged" 
-                    MaxLength="20">
+                    OnTextContentChange="TextContentChanged"
+                    MaxLength="2000" 
+                    EditorClass="myEditorClass">
     <ToolbarContent>
         <span class="ql-formats">
             <select class="ql-font">
@@ -167,6 +168,13 @@
     Toggle Editor
 </button>
 
+<style>
+    .myEditorClass {
+        background-color: aqua;
+        overflow: auto;
+        max-height: 300px;
+    }
+</style>
 @code {
     RichTextEditor QuillHtml;
     RichTextEditor QuillNative;
