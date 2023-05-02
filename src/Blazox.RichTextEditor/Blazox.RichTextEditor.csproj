@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RazorLangVersion>3.0</RazorLangVersion>
+    <RootNamespace>Blazox.RichTextEditor</RootNamespace>
+
+    <PackageId>Blazox.RichTextEditor</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Sammy Guadarrama Chávez, Michael Washington</Authors>
+    <Description>Rich text editor for Blazor applications - Uses Quill JS</Description>
+    <Copyright>Copyright 2022 (c) Michael Washington. All rights reserved.</Copyright>
+    <Copyright>Copyright 2023 (c) Sammy Guadarrama Chávez. All rights reserved.</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/SammyGCh/RichTextEditor</PackageProjectUrl>
+    <!--<PackageIconUrl>https://avatars1.githubusercontent.com/u/39194025</PackageIconUrl>-->
+    <RepositoryUrl>https://github.com/SammyGCh/RichTextEditor</RepositoryUrl>
+    <PackageTags>Blazor Rich Text Editor Quill QuillJS Blazored Razor Components</PackageTags>
+    <Company />
+    <PackageReleaseNotes>Allows to get the editor text content in OnChange event.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Blazox-BlazorQuill.js" />
+  </ItemGroup>
+
+</Project>

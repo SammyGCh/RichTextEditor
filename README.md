@@ -1,5 +1,5 @@
-# Blazored TextEditor
-Rich Text Editor for Blazor applications - Uses [Quill JS](https://quilljs.com/ "Quill JS.com")
+# Blazox RichTextEditor
+Rich Text Editor for Blazor applications - Uses [Quill JS](https://quilljs.com/ "Quill JS.com") and was forked from [Blazored.TextEditor](https://github.com/Blazored/TextEditor)
 
 ![Screenshot](HTMLExample.png)
 
@@ -16,7 +16,7 @@ Rich Text Editor for Blazor applications - Uses [Quill JS](https://quilljs.com/ 
 
 You can install from NuGet using the following command:
 
-`Install-Package Blazored.TextEditor`
+`Install-Package Blazox.RichTextEditor`
 
 Or via the Visual Studio package manger.
 
@@ -43,7 +43,7 @@ Then add the JS script at the bottom of the page using the following script tag.
 You can add the following using statement to your main `_Imports.razor` to make referencing the component a bit easier.
 
 ```cs
-@using Blazored.TextEditor
+@using Blazox.RichTextEditor
 ```
 
 ## Usage
@@ -61,6 +61,7 @@ Below is a list of all the options available on the Text Editor.
 - `Placeholder` (Optional - Default: `Compose an epic...`) - The text to show when editor is empty.
 - `Theme` (Optional - Default: `snow`) - Use `snow` to show the Toolbar on top of the editor, and `bubble` for inline editing.
 - `DebugLevel` (Optional - Default: `info`) - Determines the level of debug information returned to the web browser console window. Options are `error`, `warn`, `log`, or `info`.
+- `MaxLength` (Optional) - Determines the max length of the text content of the editor if it is specified.
 
 **Methods**
 
@@ -72,13 +73,17 @@ Below is a list of all the options available on the Text Editor.
 - `InsertImage` (`string`) - Inserts an image at the current point in the editor.
 - `InsertText` (`string`) - Inserts text at the current point in the editor.
 
+**Events**
+
+- `OnTextContentChange` (`string`, optional) - A callback that will be invoked when the text of the editor changes. This change doesn't include the insert of images and only works if the ReadOnly parameter is not set to true.
+
 
 ### Basic Example
 (see code in the [Index.razor page](https://github.com/Blazored/TextEditor/blob/main/samples/BlazorServerSide/Pages/Index.razor) in the repo for more examples)
 ```cs
-@using Blazored.TextEditor
+@using Blazox.RichTextEditor
 
-<BlazoredTextEditor @ref="@QuillHtml">
+<RichTextEditor @ref="@QuillHtml">
     <ToolbarContent>
         <select class="ql-header">
             <option selected=""></option>
@@ -111,7 +116,7 @@ Below is a list of all the options available on the Text Editor.
         <a href="http://BlazorHelpWebsite.com">
         BlazorHelpWebsite.com</a>
     </EditorContent>
-</BlazoredTextEditor>
+</RichTextEditor>
 <br />
 <button class="btn btn-primary" 
         @onclick="GetHTML">Get HTML</button>
@@ -127,7 +132,7 @@ Below is a list of all the options available on the Text Editor.
 
 @code {
 
-BlazoredTextEditor QuillHtml;
+RichTextEditor QuillHtml;
 string QuillHTMLContent;
 
     public async void GetHTML()

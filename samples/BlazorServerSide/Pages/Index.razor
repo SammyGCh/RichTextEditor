@@ -1,7 +1,7 @@
 ﻿@page "/"
-@using Blazored.TextEditor
+@using Blazox.RichTextEditor
 
-<BlazoredTextEditor @ref="@QuillHtml">
+<RichTextEditor @ref="@QuillHtml">
     <ToolbarContent>
         <select class="ql-header">
             <option selected=""></option>
@@ -35,7 +35,7 @@
             BlazorHelpWebsite.com
         </a>
     </EditorContent>
-</BlazoredTextEditor>
+</RichTextEditor>
 <br />
 <button class="btn btn-primary"
         @onclick="GetHTML">
@@ -52,8 +52,11 @@
     @QuillHTMLContent
 </div>
 <br />
-<BlazoredTextEditor @ref="@QuillNative"
-                    Placeholder="Enter non HTML format like centering...">
+<RichTextEditor @ref="@QuillNative"
+                    Placeholder="Enter non HTML format like centering..." 
+                    OnTextContentChange="TextContentChanged"
+                    MaxLength="2000" 
+                    EditorClass="myEditorClass">
     <ToolbarContent>
         <span class="ql-formats">
             <select class="ql-font">
@@ -94,7 +97,7 @@
             <button class="ql-link"></button>
         </span>
     </ToolbarContent>
-</BlazoredTextEditor>
+</RichTextEditor>
 <br />
 <button class="btn btn-primary"
         @onclick="GetContent">
@@ -119,7 +122,12 @@
 </div>
 <br />
 <br />
-<BlazoredTextEditor @ref="@QuillReadOnly"
+<div>
+    @_editorTextContent
+</div>
+<br />
+<br />
+<RichTextEditor @ref="@QuillReadOnly"
                     ReadOnly="true"
                     Theme="bubble"
                     DebugLevel="log">
@@ -153,24 +161,32 @@
     <EditorContent>
         @((MarkupString)@QuillReadOnlyContent)
     </EditorContent>
-</BlazoredTextEditor>
+</RichTextEditor>
 <br />
 <button class="btn btn-info"
         @onclick="ToggleQuillEditor">
     Toggle Editor
 </button>
 
+<style>
+    .myEditorClass {
+        background-color: aqua;
+        overflow: auto;
+        max-height: 300px;
+    }
+</style>
 @code {
-    BlazoredTextEditor QuillHtml;
-    BlazoredTextEditor QuillNative;
-    BlazoredTextEditor QuillReadOnly;
+    RichTextEditor QuillHtml;
+    RichTextEditor QuillNative;
+    RichTextEditor QuillReadOnly;
 
     string QuillHTMLContent;
     string QuillContent;
-    string QuillReadOnlyContent = 
+    string QuillReadOnlyContent =
         @"<span><b>Read Only</b> <u>Content</u></span>";
 
     bool mode = false;
+    private string _editorTextContent = string.Empty;
 
     public async void GetHTML()
     {
@@ -215,5 +231,10 @@
     {
         mode = (mode) ? false : true;
         await this.QuillReadOnly.EnableEditor(mode);
+    }
+
+    private void TextContentChanged(string textContent)
+    {
+        _editorTextContent = textContent;
     }
 }
