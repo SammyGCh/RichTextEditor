@@ -34,8 +34,8 @@ Then add the JS script at the bottom of the page using the following script tag.
 
 ```html
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <script src="_content/Blazored.TextEditor/quill-blot-formatter.min.js"></script>
-    <script src="_content/Blazored.TextEditor/Blazored-BlazorQuill.js"></script>
+    <script src="_content/Blazox.RichTextEditor/quill-blot-formatter.min.js"></script>
+    <script src="_content/Blazox.RichTextEditor/Blazox-BlazorQuill.js"></script>
 ```
 
 **NOTE** If you're using Blazor WebAssembly then these need to be added to your `wwwroot\index.html`.
